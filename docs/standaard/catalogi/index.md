@@ -184,32 +184,25 @@ Bovendien gelden er beperkingen op verdere acties die uitgevoerd kunnen worden o
         * deels bijgewerkt worden (PATCH), m.u.v. het bijwerken van enkel het attribuut `eindeGeldigheid` of een <a name="correctie">([correctie](#correctie))</a>
         * verwijderd worden (DELETE)
 
-* Beperkingen voor objecttypen gerelateerd aan een objecttype met `concept=false` **<a name="ztc-010">([ztc-010](#ztc-010))</a>**:
 
-    * <span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
-        <strong>Aangepast in versie 1.2.0</strong>
-    </span><br/>
-    
-    Het objecttype mag NIET:
-        * geheel bijgewerkt worden (PUT) m.u.v een <a name="correctie">([correctie](#correctie))</a>
-        * deels bijgewerkt worden (PATCH) of een <a name="correctie">([correctie](#correctie))</a>
-        * verwijderd worden (DELETE)
-    * Voor `ZaakType-InformatieObjectType` gelden bovenstaande regels **(ztc-010)** alleen in het geval waarbij zowel het `ZaakType`
-    als het `InformatieObjectType` `concept=False` hebben
+* <span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;"><strong>Aangepast in versie 1.2.0</strong></span><br>Beperkingen voor de volgende objecttypen: Roltype, Statustype, Eigenschap, Zaaktype-Informatieobjecttype, Resultaattype en Zaakobjecttype **<a name="ztc-010">([ztc-010](#ztc-010))</a>**. Als een van deze objecttypen, aangeduid met `x`, gerelateerd is aan een `zaaktype` met `concept=false`, dan mag objecttype `x` NIET:
 
+    * aangemaakt worden (POST) met uitzondering van een <a name="correctie">[correctie](#correctie)</a>.
+    * geheel bijgewerkt worden (PUT) met uitzondering van een <a name="correctie">[correctie](#correctie)</a>.
+    * deels bijgewerkt worden (PATCH) met uitzondering van een <a name="correctie">[correctie](#correctie)</a>.
+    * verwijderd worden (DELETE).
 
-    * <span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
-        <strong>Aangepast in versie 1.3.0</strong>
-    </span><br/>
-    
+* <span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
+        <strong>Aangepast in versie 1.3.0</strong></span><br/>
 ~~* Beperkingen die gelden voor objecttypen die NIET gerelateerd zijn aan een objecttype met `concept=false` **<a name="ztc-011">([ztc-011](#ztc-011))</a>**:
     * Er mag GEEN nieuw objecttype aangemaakt worden met een relatie naar een objecttype met `concept=false` (create)
     * Er mag GEEN nieuwe relatie worden gelegd tussen een objecttype en een objecttype met `concept=false` (update, partial_update)
     * Voor `ZaakType-InformatieObjectType` gelden bovenstaande regels **(ztc-011)** alleen in het geval waarbij zowel het `ZaakType` als het `InformatieObjectType` `concept=False` hebben~~
 
-* <span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
-        <strong>Nieuw in versie 1.3.0</strong>
-    </span><br/>
+<span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
+    <strong>Nieuw in versie 1.3.0</strong>
+</span><br/>
+<br>
 
 
 [![Historiemodel Catalogi API ImZTC 2.2](catalogi_history.png)](catalogi_history.png "Historiemodel Calogi API ImZTC versie 2.2 - klik voor groot")
@@ -318,6 +311,26 @@ De voorwaarden waaronder een correctie uitgevoerd mag worden zijn:
 
 #### <a name="ztc-014">Leesrechten Zaken en Documenten ook voor Catalogi ([ztc-014](#ztc-014))</a>
 Wanneer de ZRC of DRC met respectievelijk de scopes zaken.lezen of documenten.lezen de ZTC raadplegen moet de provider deze verzoeken behandelen alsof de scope catalogi.lezen gebruikt is.
+
+<span style="padding: 0.2em 0.5em; border: solid 1px #EEEEEE; border-radius: 3px; background: #DDDFFF;">
+    <strong>Nieuw in versie 1.3.2</strong>
+</span>
+
+#### <a name="ztc-015">Datumvelden bij het specificeren van eigenschappen ([ztc-015](#ztc-015))</a>
+
+Als het attribuut `eigenschap.specificatie.formaat` de waarde `datum` heeft, dan moet er worden voldaan aan de volgende twee voorwaarden.
+
+* Het attribuut `eigenschap.specificatie.lengte` is gelijk aan `8`.
+
+* Het datumveld dat als eigenschap gedefinieerd is voldoet aan het formaat "YYYYMMDD", bijvoorbeeld `20220728` (in ISO-notatie `2022-07-28`).
+
+Als het attribuut `eigenschap.specificatie.formaat` de waarde `datum-tijd` heeft, dan moet er worden voldaan aan de volgende twee voorwaarden.
+
+* Het attribuut `eigenschap.specificatie.lengte` is gelijk aan `14`.
+
+* Het datumtijdveld dat als eigenschap gedefinieerd is voldoet aan het formaat "YYYYMMDDhhmmss", bijvoorbeeld `20220728134022` (in ISO-notatie `2022-07-28T13:40:22`).
+
+Let op: Bij het specificeren van custom eigenschappen voor een zaakobject wijkt het formaat van datumvelden af ten op zichte van de reguliere attributen van een zaakobject. In het reguliere geval wordt het standaard ISO-formaat gevolgd. In de toekomst hopen we deze inconsistentie op te lossen, maar voor nu hebben we te maken met deze legacy uit het [ImZTC](https://www.gemmaonline.nl/index.php/Imztc_2.1/doc/attribuutsoort/eigenschap.specificatie_van_eigenschap.lengte).
 
 
 ## Overige documentatie
